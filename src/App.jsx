@@ -18,9 +18,11 @@ export const goodsFromServer = [
 export const App = () => {
   const [sortField, setSortField] = useState('');
   const [reversed, setReversed] = useState(false);
+
   const SORT_ABC = 'sortABC';
   const SORT_LENGTH = 'sortLength';
-  let visibleGoods = [...goodsFromServer];
+
+  const visibleGoods = [...goodsFromServer];
 
   switch (sortField) {
     case SORT_ABC:
@@ -32,18 +34,19 @@ export const App = () => {
       break;
 
     default:
+      break;
   }
 
   if (reversed) {
-    visibleGoods = visibleGoods.reverse();
+    visibleGoods.reverse();
   }
+
+  const needReset = sortField !== '' || reversed;
 
   const reset = () => {
     setSortField('');
     setReversed(false);
   };
-
-  const isOriginal = visibleGoods.every((g, i) => g === goodsFromServer[i]);
 
   return (
     <div className="section content">
@@ -74,7 +77,7 @@ export const App = () => {
           Reverse
         </button>
 
-        {!isOriginal && (
+        {needReset && (
           <button
             type="button"
             className="button is-danger is-light"
